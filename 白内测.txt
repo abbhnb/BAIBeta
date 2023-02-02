@@ -1,0 +1,406 @@
+if syn then 
+local Letters = {
+    {["h"] = 1, ["o"] = 2, ["k"] = 1, ["f"] = 1, ["u"] = 1, ["n"] = 1, ["c"] = 1},
+    {["h"] = 1, ["o"] = 3, ["k"] = 1, ["f"] = 1, ["u"] = 1, ["n"] = 2, ["c"] = 1, ["t"] = 1, ["i"] = 1}
+}
+
+local CS = getfenv().script
+local pa = pairs
+local gp = debug.getprotos
+local tn = tonumber
+local ts = tostring
+local ss = string.sub
+local sl = string.len
+local sf = string.find
+local tf = table.find
+local to = typeof
+local pc = pcall
+local gc = debug.getconstants
+local gec = syn_getgc
+local srmt = setrawmetatable
+local grmt = getrawmetatable
+local gf = getfenv
+local gg = getgenv
+local mr = math.random
+local wt = wait
+local pr = print
+local ti = table.insert
+local lc = islclosure
+local synR = syn.request
+local hf = hookfunction or hookfunc
+
+function CheckToSeeIfMatchedTable(Indxes, TableToCompare)
+    for i, v in pa(TableToCompare) do
+        if Indxes[i] ~= v then
+            return false
+        end
+    end
+    return true
+end
+
+local DetectHook = function(Func, Tab)
+    local Lets = {}
+    local AmountOfNumbersInConstants = 0
+    if #gp(Func) > 0 and #gp(gp(Func)[1]) > 0 and #Tab > 0 then
+        for i = 1, #Tab do
+            if tn(Tab[i]) and tn(Tab[i]) > 1 then
+                AmountOfNumbersInConstants = AmountOfNumbersInConstants + 1
+            end
+        end
+    end
+    if AmountOfNumbersInConstants > 8 and gf(Func).script ~= CS then
+        return true
+    end
+    for i = 1, #Tab do
+        local TempTab = {}
+        local DidMatch = true
+        if Tab[i] == "DetectHook" or Tab[i] == "readbinarystring" then
+            return false
+        end
+        for a = 1, sl(ts(Tab[i])) do
+            local c = ss(ts(Tab[i]), a, a)
+            if not TempTab[c] then
+                TempTab[c] = 0
+            end
+            TempTab[c] = TempTab[c] + 1
+            if not Letters[2][c] or TempTab[c] > Letters[2][c] then
+                DidMatch = false
+                break
+            end
+        end
+        if DidMatch then
+            for a, b in pa(TempTab) do
+                if not Lets[a] then
+                    Lets[a] = 0
+                end
+                Lets[a] = Lets[a] + b
+            end
+        end
+    end
+    if CheckToSeeIfMatchedTable(Lets, Letters[1]) or CheckToSeeIfMatchedTable(Lets, Letters[2]) then
+        return true
+    end
+end
+function DetectModifiedGC()
+    local Samples = {}
+    local DifferentSamples = {}
+    for i = 1, mr(7, 10) do
+        ti(Samples, gec())
+    end
+    wt(0.3)
+    for i = 1, mr(7,10) do
+        ti(DifferentSamples, gec())
+    end
+    for i = 1, #Samples do
+        if to(Samples[i]) ~= "table" or #Samples[i] < mr(45, 120) or #Samples[i] ~= #Samples[1] or Samples[i] == Samples[1] and i ~= 1 or grmt(Samples[i]) then
+            return true
+        end
+    end
+    for i = 1, #Samples[1] do
+        for a = 2, #Samples do
+            if Samples[a][i] ~= Samples[1][i] then
+                return true
+            end
+        end
+    end
+    for i = 1, #DifferentSamples do
+        if to(DifferentSamples[i]) ~= "table" or #DifferentSamples[i] < mr(45, 120) or #DifferentSamples[i] ~= #DifferentSamples[1] or DifferentSamples[i] == DifferentSamples[1] and i ~= 1 or grmt(DifferentSamples[i]) then
+            return true
+        end
+    end
+    for i = 1, #DifferentSamples[1] do
+        for a = 2, #DifferentSamples do
+            if DifferentSamples[a][i] ~= DifferentSamples[1][i] then
+                return true
+            end
+        end
+    end
+    if #DifferentSamples[1] == #Samples[1] then
+        return true
+    end
+    return false
+end
+local Temp = function()
+    error("This Errors Here.")
+end
+
+local Old = grmt(gf())
+local Log = function()
+    while true do end
+end
+
+gg()["\0LongNameHere"] = Temp
+local v, vs = pc(pc)
+local v2, v2s = pc(tf)
+local v3, v3s = pc(gg()["\0LongNameHere"])
+local N = ts(mr(1, 1000000))
+
+if to(to) ~= "function" or not gf() or not gf()["getfenv"] or to(grmt(gf()).__index) ~= "table" then
+    while true do end
+end
+if v or v2 or vs == v2s or vs ~= "missing argument #1" or v2s ~= "missing argument #1 to 'find' (table expected)" or v3 or not sf(v3s, "This Errors Here") or not sf(N..ts(mr(1, 100000)), N)  then
+    while true do end
+end
+
+srmt(gf(), {__index = Crash})
+
+local Crash = function(...)
+  print(...)  
+  --Old.__index["print"]("Crashed..",...)
+end
+
+if DetectModifiedGC() then
+    while true do end
+end
+
+for i, v in pa(gec()) do
+    if to(v) == "function" and lc(v) and DetectHook(v, gc(v)) then
+        while true do end
+    end
+end
+srmt(gf(), Old)
+print("欢迎使用白脚本❤️❤️❤️❤️")
+local BAI = Instance.new("ScreenGui")
+local Main = Instance.new("Frame")
+local key = Instance.new("TextBox")
+local UICorner = Instance.new("UICorner")
+local chenk = Instance.new("TextButton")
+local UICorner_2 = Instance.new("UICorner")
+local TextLabel = Instance.new("TextLabel")
+local close = Instance.new("TextButton")
+local UICorner_3 = Instance.new("UICorner")
+local UICorner_4 = Instance.new("UICorner")
+
+
+BAI.Name = "BAI"
+BAI.Parent = game.CoreGui
+
+Main.Name = "Main"
+Main.Parent = BAI
+Main.AnchorPoint = Vector2.new(0.5, 0.5)
+Main.BackgroundColor3 = Color3.fromRGB(204, 204, 204)
+Main.BorderSizePixel = 0
+Main.Position = UDim2.new(0.499617159, 0, 0.5, 0)
+Main.Size = UDim2.new(0, 400, 0, 220)
+Main.Active = true
+Main.Draggable = true
+
+key.Name = "key"
+key.Parent = Main
+key.BackgroundColor3 = Color3.fromRGB(186, 186, 186)
+key.BorderColor3 = Color3.fromRGB(53, 53, 53)
+key.Position = UDim2.new(0.224999994, 0, 0.386363626, 0)
+key.Size = UDim2.new(0, 220, 0, 50)
+key.Font = Enum.Font.Unknown
+key.Text = "输入卡密"
+key.TextColor3 = Color3.fromRGB(0, 0, 0)
+key.TextScaled = true
+key.TextSize = 14.000
+key.TextWrapped = true
+key.Text = key.Text
+
+
+UICorner.CornerRadius = UDim.new(0, 9)
+UICorner.Parent = key
+
+chenk.Name = "chenk"
+chenk.Parent = Main
+chenk.BackgroundColor3 = Color3.fromRGB(186, 186, 186)
+chenk.BorderColor3 = Color3.fromRGB(53, 53, 53)
+chenk.Position = UDim2.new(0.25, 0, 0.690909088, 0)
+chenk.Size = UDim2.new(0, 200, 0, 50)
+chenk.Font = Enum.Font.SourceSans
+chenk.Text = "校验卡密"
+chenk.TextColor3 = Color3.fromRGB(0, 0, 0)
+chenk.TextScaled = true
+chenk.TextSize = 14.000
+chenk.TextWrapped = true
+chenk.MouseButton1Down:connect(function()
+local hwid = game:GetService("RbxAnalyticsService"):GetClientId()
+local nub = "%d%d%d"
+id, num = string.gsub(hwid,'-','',4)
+if identifyexecutor() == 'Synapse X' then
+local Response = syn.request({
+	Url = "https://w.t3yanzheng.com/631E470ADF584757&kami="..key.Text.."&imei="..id.."",
+	Method = "POST"
+})
+code = string.sub(Response.Body, string.find(Response.Body, nub))
+else
+local Response = request({
+	Url = "https://w.t3yanzheng.com/631E470ADF584757&kami="..key.Text.."&imei="..id.."",
+	Method = "POST"
+})
+code = string.sub(Response.Body, string.find(Response.Body, nub))
+end
+if code == '200' then
+TextLabel.Text = '卡密校验成功'
+wait(2)
+TextLabel.Text = '即将开启脚本'
+wait(2)
+loadstring(game:HttpGet(('https://raw.githubusercontent.com/IIIIIIIIIIIIllllllllIIIIIIIllllllllIIlI/baijiaobengv4beta/main/jz1-obfuscated.lua'),true))()
+BAI:Destroy()
+else
+TextLabel.Text= '失败原因:请在原设备登录,无效卡密或卡密到期'
+end
+end)
+
+UICorner_2.CornerRadius = UDim.new(0, 9)
+UICorner_2.Parent = chenk
+
+TextLabel.Parent = Main
+TextLabel.BackgroundColor3 = Color3.fromRGB(186, 186, 186)
+TextLabel.BorderSizePixel = 0
+TextLabel.Position = UDim2.new(0, 0, 0.131818175, 0)
+TextLabel.Size = UDim2.new(0, 400, 0, 43)
+TextLabel.Font = Enum.Font.Unknown
+TextLabel.Text = "白脚本卡密版测试"
+TextLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextLabel.TextScaled = true
+TextLabel.TextSize = 14.000
+TextLabel.TextWrapped = true
+
+
+close.Name = "close"
+close.Parent = Main
+close.BackgroundColor3 = Color3.fromRGB(172, 172, 172)
+close.BorderSizePixel = 0
+close.Position = UDim2.new(0.925000012, 0, 0, 0)
+close.Size = UDim2.new(0, 30, 0, 29)
+close.Font = Enum.Font.SourceSans
+close.Text = "X"
+close.TextColor3 = Color3.fromRGB(255, 0, 0)
+close.TextScaled = true
+close.TextSize = 14.000
+close.TextStrokeColor3 = Color3.fromRGB(255, 0, 0)
+close.TextWrapped = true
+close.MouseButton1Down:connect(function()
+BAI:Destroy()
+end)
+UICorner_3.Parent = close
+
+UICorner_4.Parent = Main
+
+else
+local BAI = Instance.new("ScreenGui")
+local Main = Instance.new("Frame")
+local key = Instance.new("TextBox")
+local UICorner = Instance.new("UICorner")
+local chenk = Instance.new("TextButton")
+local UICorner_2 = Instance.new("UICorner")
+local TextLabel = Instance.new("TextLabel")
+local close = Instance.new("TextButton")
+local UICorner_3 = Instance.new("UICorner")
+local UICorner_4 = Instance.new("UICorner")
+
+
+BAI.Name = "BAI"
+BAI.Parent = game.CoreGui
+
+Main.Name = "Main"
+Main.Parent = BAI
+Main.AnchorPoint = Vector2.new(0.5, 0.5)
+Main.BackgroundColor3 = Color3.fromRGB(204, 204, 204)
+Main.BorderSizePixel = 0
+Main.Position = UDim2.new(0.499617159, 0, 0.5, 0)
+Main.Size = UDim2.new(0, 400, 0, 220)
+Main.Active = true
+Main.Draggable = true
+
+key.Name = "key"
+key.Parent = Main
+key.BackgroundColor3 = Color3.fromRGB(186, 186, 186)
+key.BorderColor3 = Color3.fromRGB(53, 53, 53)
+key.Position = UDim2.new(0.224999994, 0, 0.386363626, 0)
+key.Size = UDim2.new(0, 220, 0, 50)
+key.Font = Enum.Font.Unknown
+key.Text = "输入卡密"
+key.TextColor3 = Color3.fromRGB(0, 0, 0)
+key.TextScaled = true
+key.TextSize = 14.000
+key.TextWrapped = true
+key.Text = key.Text
+
+
+UICorner.CornerRadius = UDim.new(0, 9)
+UICorner.Parent = key
+
+chenk.Name = "chenk"
+chenk.Parent = Main
+chenk.BackgroundColor3 = Color3.fromRGB(186, 186, 186)
+chenk.BorderColor3 = Color3.fromRGB(53, 53, 53)
+chenk.Position = UDim2.new(0.25, 0, 0.690909088, 0)
+chenk.Size = UDim2.new(0, 200, 0, 50)
+chenk.Font = Enum.Font.SourceSans
+chenk.Text = "校验卡密"
+chenk.TextColor3 = Color3.fromRGB(0, 0, 0)
+chenk.TextScaled = true
+chenk.TextSize = 14.000
+chenk.TextWrapped = true
+chenk.MouseButton1Down:connect(function()
+local hwid = game:GetService("RbxAnalyticsService"):GetClientId()
+local nub = "%d%d%d"
+id, num = string.gsub(hwid,'-','',4)
+if identifyexecutor() == 'Synapse X' then
+local Response = syn.request({
+	Url = "https://w.t3yanzheng.com/631E470ADF584757&kami="..key.Text.."&imei="..id.."",
+	Method = "POST"
+})
+code = string.sub(Response.Body, string.find(Response.Body, nub))
+else
+local Response = request({
+	Url = "https://w.t3yanzheng.com/631E470ADF584757&kami="..key.Text.."&imei="..id.."",
+	Method = "POST"
+})
+code = string.sub(Response.Body, string.find(Response.Body, nub))
+end
+if code == '200' then
+TextLabel.Text = '卡密校验成功'
+wait(2)
+TextLabel.Text = '即将开启脚本'
+wait(2)
+loadstring(game:HttpGet(('https://raw.githubusercontent.com/IIIIIIIIIIIIllllllllIIIIIIIllllllllIIlI/baijiaobengv4beta/main/jz1-obfuscated.lua'),true))()
+BAI:Destroy()
+else
+TextLabel.Text= '失败原因:请在原设备登录,无效卡密或卡密到期'
+end
+end)
+
+UICorner_2.CornerRadius = UDim.new(0, 9)
+UICorner_2.Parent = chenk
+
+TextLabel.Parent = Main
+TextLabel.BackgroundColor3 = Color3.fromRGB(186, 186, 186)
+TextLabel.BorderSizePixel = 0
+TextLabel.Position = UDim2.new(0, 0, 0.131818175, 0)
+TextLabel.Size = UDim2.new(0, 400, 0, 43)
+TextLabel.Font = Enum.Font.Unknown
+TextLabel.Text = "白脚本卡密版测试"
+TextLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextLabel.TextScaled = true
+TextLabel.TextSize = 14.000
+TextLabel.TextWrapped = true
+
+
+close.Name = "close"
+close.Parent = Main
+close.BackgroundColor3 = Color3.fromRGB(172, 172, 172)
+close.BorderSizePixel = 0
+close.Position = UDim2.new(0.925000012, 0, 0, 0)
+close.Size = UDim2.new(0, 30, 0, 29)
+close.Font = Enum.Font.SourceSans
+close.Text = "X"
+close.TextColor3 = Color3.fromRGB(255, 0, 0)
+close.TextScaled = true
+close.TextSize = 14.000
+close.TextStrokeColor3 = Color3.fromRGB(255, 0, 0)
+close.TextWrapped = true
+close.MouseButton1Down:connect(function()
+BAI:Destroy()
+end)
+UICorner_3.Parent = close
+
+UICorner_4.Parent = Main
+print("欢迎使用白脚本❤️❤️❤️❤️")
+
+
+end
